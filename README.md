@@ -34,15 +34,37 @@ spring.jpa.hibernate.ddl-auto=update
         private String nombreusuario;
         private String password;
         private String rol;
-
     }
 
 ```
+------
+    ## Entidad Cliente
+``` JAVA 
+ . Usaremos las siguientes anotaciones 
+    @Entity
+    @Table (name = "Cliente")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+. Con los siguientes atributos para la entidad login    
+    public class Cliente {
 
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long clienteID;
+
+        private String nombre;
+        private String apellido;
+        private String email;
+        private String fecharegistro;
+        private String fechavencimiento;
+    }
+```
 *   **Modulo : Controlador**
 ------
     ## Controlador de login
 ```JAVA
+. Usaremos las siguientes anotaciones 
     @RestController
     @RequestMapping("/api/logins")
     public class LoginController {
@@ -82,6 +104,49 @@ spring.jpa.hibernate.ddl-auto=update
         }
     }
 ```
+------
+    ## Controlador de cliente
+``` JAVA
+. Usaremos las siguientes anotaciones 
+    @RestController
+    @RequestMapping("/api/clientes")
+    public class ClienteController {
+        
+        @Autowired
+        private ClienteRepositorie clienteRepositorie;
+
+        /*Obtener todos los clientes */
+        @GetMapping
+        public List <Cliente> obtener_todos_clientes() {
+            return clienteRepositorie.findAll();
+        }
+        
+        /*Obtener por medio de una id */
+        @GetMapping("/{clienteID}")
+        public Cliente obtener_cliente_id(@PathVariable ("clienteID") Long clienteID) {
+            return clienteRepositorie.findById(clienteID).orElse(null);
+        }
+
+        /*Crear un cliente */
+        @PostMapping()
+        public Cliente crear_cliente(@RequestBody Cliente cliente) {
+            return clienteRepositorie.save(cliente);
+        }
+        
+        /*Actualizar cliente*/
+        @PutMapping("/{clienteID}")
+        public Cliente actualizar_cliente(@PathVariable ("clienteID") Long clienteID, @RequestBody Cliente cliente) {
+            cliente.setClienteID(clienteID);
+            return clienteRepositorie.save(cliente);
+        }
+
+        /* Eliminar cliente */
+        @DeleteMapping("/{clienteID}")
+        public void eliminar_cliente(@PathVariable ("clienteID") Long clienteID) {
+            clienteRepositorie.deleteById(clienteID);
+        }
+    }
+ ```
 *   **Modulo : Repositorio**
 ------
     ## Repositorio Login
@@ -89,9 +154,14 @@ spring.jpa.hibernate.ddl-auto=update
 . Tendremos un repositorio que sera base entre el controlador, el modelo y
 la informacion que utilicemos 
     public interface LoginRepositorie  extends JpaRepository <Login, Long> {
-
     }
 
+ ```
+------
+    ## Repositorio cliente
+``` JAVA
+    public interface ClienteRepositorie  extends JpaRepository <Cliente, Long> {
+    }
  ```
 *   **Modulo : Config**
 ------
