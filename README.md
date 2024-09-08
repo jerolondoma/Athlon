@@ -9,7 +9,7 @@ y en el archivo application.properties con las siguientes lineas
 spring.application.name=Gimnasio_Athlon
 spring.datasource.url=jdbc:mysql://localhost:3306/Gimnasio_Athlon?useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=cuervo
+spring.datasource.password=password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 spring.jpa.hibernate.ddl-auto=update
