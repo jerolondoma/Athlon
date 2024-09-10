@@ -3,7 +3,7 @@
 * Tendremos unos modulos que contendran las entidades, repositorio, controloradores en la API 
 RES 
 -Hacemos la conexion con la base de datos entre MYSQL y el backend dentro de la carpeta resources 
-y en el archivo application.properties con las siguientes lineas 
+y en el archivo application.properties con las siguientes lineas de codigo
 
 ``` MYSQL 
 spring.application.name=Gimnasio_Athlon
