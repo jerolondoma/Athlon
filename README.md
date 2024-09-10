@@ -3,13 +3,13 @@
 * Tendremos unos modulos que contendran las entidades, repositorio, controloradores en la API 
 RES 
 -Hacemos la conexion con la base de datos entre MYSQL y el backend dentro de la carpeta resources 
-y en el archivo application.properties con las siguientes lineas 
+y en el archivo application.properties con las siguientes lineas de codigo
 
 ``` MYSQL 
 spring.application.name=Gimnasio_Athlon
 spring.datasource.url=jdbc:mysql://localhost:3306/Gimnasio_Athlon?useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=password
+spring.datasource.password=password 
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 spring.jpa.hibernate.ddl-auto=update
