@@ -60,6 +60,29 @@ spring.jpa.hibernate.ddl-auto=update
         private String fechavencimiento;
     }
 ```
+------
+    ## Entidad Planes
+``` JAVA 
+ . Usaremos las siguientes anotaciones 
+    @Entity
+    @Table (name = "Cliente")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+. Con los siguientes atributos para la entidad login    
+    public class Cliente {
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long clienteID;
+
+        private String nombre;
+        private String apellido;
+        private String email;
+        private String fecharegistro;
+        private String fechavencimiento;
+    }
+```
 *   **Modulo : Controlador**
 ------
     ## Controlador de login
