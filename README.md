@@ -65,22 +65,47 @@ spring.jpa.hibernate.ddl-auto=update
 ``` JAVA 
  . Usaremos las siguientes anotaciones 
     @Entity
-    @Table (name = "Cliente")
+    @Table (name = "Planes")
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
 . Con los siguientes atributos para la entidad login    
-    public class Cliente {
+    public class Planes {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long clienteID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long planID;
 
-        private String nombre;
-        private String apellido;
-        private String email;
-        private String fecharegistro;
-        private String fechavencimiento;
+    private String nombreplan;
+    private String duracion;
+    private String descripcion;
+    private String precio;
+    }
+```
+------
+    ## Entidad Factura
+``` JAVA 
+ . Usaremos las siguientes anotaciones 
+    @Entity
+    @Table(name = "Factura")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+. Con los siguientes atributos para la entidad login    
+    public class Factura {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long facturaID;
+    
+    private String fechaF;
+    private String precioF;
+
+    @ManyToOne
+    private Cliente clienteID;
+    
+    @ManyToOne
+    private Planes planID;
     }
 ```
 *   **Modulo : Controlador**
@@ -170,6 +195,93 @@ spring.jpa.hibernate.ddl-auto=update
         }
     }
  ```
+------
+    ## Controlador de planes
+``` JAVA
+. Usaremos las siguientes anotaciones 
+    @RestController
+    @RequestMapping("/api/planes")
+    public class PlanesController {
+
+        @Autowired
+        private PlanesRepositorie planesrepositorie;
+
+        /*Obtener todos los planes */
+        @GetMapping
+        public List <Planes> obtener_todos_planes() {
+            return planesrepositorie.findAll();
+        }
+
+        /*Obtener planes por medio de la ID */
+        @GetMapping ("/{planID}")
+        public Planes obtener_planes_id(@PathVariable("planID") Long planID) {
+            return planesrepositorie.findById(planID).orElse(null);
+        }
+
+        /*Crear un plan  */
+        @PostMapping()
+        public Planes crear_plan(@RequestBody Planes planes) {
+            return planesrepositorie.save(planes);
+        }
+        
+        /*Actualizar planes */
+        @PutMapping("/{planID}")
+        public Planes actualizar_plan(@PathVariable ("planID") Long planID, @RequestBody Planes planes) {
+            planes.setPlanID(planID);
+            return planesrepositorie.save(planes);  
+        }
+
+        /*Eliminar plan*/
+        @DeleteMapping("/{planID}")
+        public void eliminar_plan(@PathVariable ("planID") Long planID) { 
+            planesrepositorie.deleteById(planID);
+        }
+    }
+ ```
+------
+    ## Controlador de factura
+``` JAVA
+. Usaremos las siguientes anotaciones 
+    @RestController
+    @RequestMapping("/api/factura")
+    public class FacturaController {
+
+        @Autowired
+        private FacturaRepositorie facturaRepositorie;
+
+        /*Obtener todos las facturas */
+        @GetMapping
+        public List <Factura> obtener_todas_facturas() {
+            return facturaRepositorie.findAll();
+        }
+
+        /*Obtener facturas por medio de la ID */
+        @GetMapping ("/{facturaID}")
+        public Factura obtener_factura_id(@PathVariable("facturaID") Long facturaID) {
+            return facturaRepositorie.findById(facturaID).orElse(null);
+        }
+
+        /*Crear una factura  */
+        @PostMapping()
+        public Factura crear_factura(@RequestBody Factura factura) {
+            return facturaRepositorie.save(factura);
+        }
+
+        /*Actualizar facturas */
+        @PutMapping("/{facturaID}")
+        public Factura actualizar_factura(@PathVariable ("facturaID") Long facturaID, @RequestBody Factura factura) {
+            factura.setFacturaID(facturaID);
+            return facturaRepositorie.save(factura);  
+        }
+        
+        /*Eliminar plan*/
+        @DeleteMapping("/{facturaID}")
+        public void eliminar_factura(@PathVariable ("facturaID") Long facturaID) { 
+            facturaRepositorie.deleteById(facturaID);
+        }
+    }
+ ```
+
 *   **Modulo : Repositorio**
 ------
     ## Repositorio Login
@@ -184,6 +296,18 @@ la informacion que utilicemos
     ## Repositorio cliente
 ``` JAVA
     public interface ClienteRepositorie  extends JpaRepository <Cliente, Long> {
+    }
+ ```
+------
+    ## Repositorio planes
+``` JAVA
+    public interface PlanesRepositorie  extends JpaRepository <Planes, Long>{
+    }
+ ```
+------
+    ## Repositorio factura
+``` JAVA
+    public interface FacturaRepositorie  extends JpaRepository <Factura, Long >{ 
     }
  ```
 *   **Modulo : Config**
