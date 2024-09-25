@@ -12,8 +12,8 @@ public class corsConfig  implements WebMvcConfigurer{
     
     @Override
     public void addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/*")
-        .allowedOrigins("*")//Escribir la url del proyecto front a conectar
+        registry.addMapping("/**")
+        .allowedOrigins("http://localhost:5173/")//Escribir la url del proyecto front a conectar
         .allowedMethods("*")//podemos especificar los metodos a permitir desde el front
         .allowCredentials(true);//para que permita las credenciales
     }
