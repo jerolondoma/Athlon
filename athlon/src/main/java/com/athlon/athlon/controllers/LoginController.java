@@ -50,4 +50,18 @@ public class LoginController {
     public void eliminar_login(@PathVariable("usuarioID") Long login) {
         loginRepositorie.deleteById(login);
     }
+
+    /*Validar si usuario y password existen en la base de datos */
+    @PostMapping("/validar")
+    public String validarUsuario(@RequestBody Login login) {
+        login = loginRepositorie.findByNombreusuarioAndPassword(login.getNombreusuario(), login.getPassword());
+
+        if (login != null) {
+            return "Exito";
+        } else {
+            return "Error";
+        }
+    }
 }
+    
+

@@ -26,7 +26,5 @@ public class Factura {
 
     @ManyToOne
     private Cliente clienteID;
-    
-    @ManyToOne
-    private Planes planID;
+
 }

@@ -22,32 +22,32 @@ public class PlanesController {
 
     /*Obtener todos los planes */
     @GetMapping
-    public List <Planes> obtener_todos_planes() {
+    public List <Planes> obtenertodos() {
         return planesrepositorie.findAll();
     }
 
     /*Obtener planes por medio de la ID */
     @GetMapping ("/{planID}")
-    public Planes obtener_planes_id(@PathVariable("planID") Long planID) {
+    public Planes obtenerid(@PathVariable("planID") Long planID) {
         return planesrepositorie.findById(planID).orElse(null);
     }
 
     /*Crear un plan  */
     @PostMapping()
-    public Planes crear_plan(@RequestBody Planes planes) {
+    public Planes crear(@RequestBody Planes planes) {
         return planesrepositorie.save(planes);
     }
     
     /*Actualizar planes */
     @PutMapping("/{planID}")
-    public Planes actualizar_plan(@PathVariable ("planID") Long planID, @RequestBody Planes planes) {
+    public Planes actualizar(@PathVariable ("planID") Long planID, @RequestBody Planes planes) {
         planes.setPlanID(planID);
         return planesrepositorie.save(planes);  
     }
 
     /*Eliminar plan*/
     @DeleteMapping("/{planID}")
-    public void eliminar_plan(@PathVariable ("planID") Long planID) { 
+    public void eliminar(@PathVariable ("planID") Long planID) { 
         planesrepositorie.deleteById(planID);
     }
 }

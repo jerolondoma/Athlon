@@ -198,7 +198,9 @@ spring.jpa.hibernate.ddl-auto=update
 ------
     ## Controlador de planes
 ``` JAVA
-. Usaremos las siguientes anotaciones 
+. Usaremos las siguientes anotaciones y en se agregar un post mas para poder validar
+usuarios y password por medio de unos condicionales que seran utilizados por el fornt 
+para el inicio de pagina
     @RestController
     @RequestMapping("/api/planes")
     public class PlanesController {
@@ -235,6 +237,17 @@ spring.jpa.hibernate.ddl-auto=update
         @DeleteMapping("/{planID}")
         public void eliminar_plan(@PathVariable ("planID") Long planID) { 
             planesrepositorie.deleteById(planID);
+        }
+
+        @PostMapping("/validar")
+        public String validarUsuario(@RequestBody Login login) {
+            login = loginRepositorie.findByNombreusuarioAndPassword(login.getNombreusuario(), login.getPassword());
+
+            if (login != null) {
+                return "Exito";
+            } else {
+                return "Error";
+            }
         }
     }
  ```
@@ -287,10 +300,11 @@ spring.jpa.hibernate.ddl-auto=update
     ## Repositorio Login
 ``` JAVA
 . Tendremos un repositorio que sera base entre el controlador, el modelo y
-la informacion que utilicemos 
+la informacion que utilicemos, en el Repositorio de Login utilizamos otra linea 
+de codigo para poder realizar la validacion de usuarios y password desde fornt 
     public interface LoginRepositorie  extends JpaRepository <Login, Long> {
+        Login findByNombreusuarioAndPassword(String nombreusuario, String password);
     }
-
  ```
 ------
     ## Repositorio cliente
